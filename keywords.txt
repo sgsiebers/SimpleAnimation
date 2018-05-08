@@ -1,0 +1,59 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Timer	KEYWORD1
+Command	KEYWORD1
+FillCommand	KEYWORD1
+FadeCommand	KEYWORD1
+DelayCommand	KEYWORD1
+CommandSequence	KEYWORD1
+LoopCommand KEYWORD1
+ParallelCommand KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+# Timer methods
+reset	KEYWORD2
+elapsedTime	KEYWORD2
+expired	KEYWORD2
+
+# Command methods
+begin	KEYWORD2
+update	KEYWORD2
+isDone  KEYWORD2
+
+# Misc methods
+init    KEYWORD2
+add KEYWORD2
+
+#######################################
+# Structures (KEYWORD3)
+#######################################
+
+LedStrip	KEYWORD3
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+# Direction
+FORWARD	LITERAL1
+REVERSE	LITERAL1
+IN LITERAL1
+OUT LITERAL1
+
+
+#######################################
+# Enums (LITERAL2)
+#######################################
+
+Direction	LITERAL2
+
