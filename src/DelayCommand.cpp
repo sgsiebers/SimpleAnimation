@@ -3,12 +3,7 @@
 
 
 
-DelayCommand::DelayCommand() : timer(Timer()) {}
-
-
-void DelayCommand::init(uint32_t _duration){
-    timer.setDuration(_duration);
-}
+DelayCommand::DelayCommand(uint16_t _duration) : timer(Timer(_duration)) {}
 
 
 void DelayCommand::begin(){

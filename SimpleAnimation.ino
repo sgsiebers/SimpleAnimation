@@ -13,27 +13,30 @@
 CRGB ledsA[NUM_LEDS];
 CRGB ledsB[NUM_LEDS];
 
-LedStrip stripA = {ledsA, NUM_LEDS};
-LedStrip stripB = {ledsB, NUM_LEDS};
 
-FillCommand fillInRed = FillCommand();
-FillCommand fillInBlue = FillCommand();
-FillCommand fillInGreen = FillCommand();
+FillCommand fillInRed = FillCommand(ledsA, NUM_LEDS, CRGB::Red, RATE, FillCommand::Direction::FORWARD);
+FillCommand fillInBlue = FillCommand(ledsA, NUM_LEDS, CRGB::Blue, RATE, FillCommand::Direction::FORWARD);
+FillCommand fillInGreen = FillCommand(ledsA, NUM_LEDS, CRGB::Green, RATE, FillCommand::Direction::FORWARD);
+FillCommand fillOutBlack = FillCommand(ledsA, NUM_LEDS, CRGB::Black, RATE, FillCommand::Direction::REVERSE);
 
-FillCommand fillOutBlack = FillCommand();
-FadeCommand fadeInRed = FadeCommand();
-FadeCommand fadeOutRed = FadeCommand();
-FadeCommand fadeInBlue = FadeCommand();
-FadeCommand fadeOutBlue = FadeCommand();
-FadeCommand fadeInGreen = FadeCommand();
-FadeCommand fadeOutGreen = FadeCommand();
+FadeCommand fadeInRed = FadeCommand(ledsB, NUM_LEDS, CRGB::Red, FADE_DURATION, FadeCommand::Direction::IN);
+FadeCommand fadeOutRed = FadeCommand(ledsB, NUM_LEDS, CRGB::Red, FADE_DURATION, FadeCommand::Direction::OUT);
+FadeCommand fadeInBlue = FadeCommand(ledsB, NUM_LEDS, CRGB::Blue, FADE_DURATION, FadeCommand::Direction::IN);
+FadeCommand fadeOutBlue = FadeCommand(ledsB, NUM_LEDS, CRGB::Blue, FADE_DURATION, FadeCommand::Direction::OUT);
+FadeCommand fadeInGreen = FadeCommand(ledsB, NUM_LEDS, CRGB::Green, FADE_DURATION, FadeCommand::Direction::IN);
+FadeCommand fadeOutGreen = FadeCommand(ledsB, NUM_LEDS, CRGB::Green, FADE_DURATION, FadeCommand::Direction::OUT);
 
-DelayCommand delayCmd = DelayCommand();
-CommandSequence<12> fillSeq = CommandSequence<12>();
-CommandSequence<9> fadeSeq = CommandSequence<9>();
-ParallelCommand<2> mainCmd = ParallelCommand<2>();
+DelayCommand fillDelay = DelayCommand(500);
+DelayCommand fadeDelay = DelayCommand(500);
+Command* fillSeqCmds[12] = {&fillInRed,&fillDelay,&fillOutBlack,&fillDelay,&fillInBlue,&fillDelay,&fillOutBlack,&fillDelay,&fillInGreen,&fillDelay,&fillOutBlack,&fillDelay};
+CommandSequence fillSeq = CommandSequence(fillSeqCmds,12);
+Command* fadeSeqCmds[12] = {&fadeInRed,&fadeDelay,&fadeOutRed,&fadeDelay,&fadeInBlue,&fadeDelay,&fadeOutBlue,&fadeDelay,&fadeInGreen,&fadeDelay,&fadeOutGreen,&fadeDelay};
+CommandSequence fadeSeq = CommandSequence(fadeSeqCmds,12);
 
-LoopCommand loopCmd = LoopCommand();
+Command* parallelCmds[2] = {&fillSeq,&fadeSeq};
+ParallelCommand mainCmd = ParallelCommand(parallelCmds,2);
+
+LoopCommand loopCmd = LoopCommand(LoopCommand::INFINITE,&mainCmd);
 bool done;
 
 
@@ -41,33 +44,14 @@ void setup() {
 
   #ifdef DEBUG
     Serial.begin(19200);
-    DEBUG_PRINT("Hello World!");
+    DEBUG_PRINT("Welcome to the Simple Animation Demo!");
   #endif
 
-    
     delay(1000);
     done = false;
-    FastLED.addLeds<NEOPIXEL, LED_PIN_A>(stripA.leds, NUM_LEDS);
-    FastLED.addLeds<NEOPIXEL, LED_PIN_B>(stripB.leds, NUM_LEDS);
+    FastLED.addLeds<NEOPIXEL, LED_PIN_A>(ledsA, NUM_LEDS);
+    FastLED.addLeds<NEOPIXEL, LED_PIN_B>(ledsB, NUM_LEDS);
 
-    delayCmd.init(500);
-    
-    fillInRed.init(stripA, CRGB::Red, RATE, FillCommand::Direction::FORWARD);
-    fillInBlue.init(stripA, CRGB::Blue, RATE, FillCommand::Direction::FORWARD);
-    fillInGreen.init(stripA, CRGB::Green, RATE, FillCommand::Direction::FORWARD);
-    fillOutBlack.init(stripA, CRGB::Black, RATE, FillCommand::Direction::REVERSE);
-    fillSeq.add(&fillInRed).add(&delayCmd).add(&fillOutBlack).add(&delayCmd).add(&fillInBlue).add(&delayCmd).add(&fillOutBlack).add(&delayCmd).add(&fillInGreen).add(&delayCmd).add(&fillOutBlack).add(&delayCmd);
-    
-    fadeInRed.init(stripB, CRGB::Red, FADE_DURATION, FadeCommand::Direction::IN);
-    fadeOutRed.init(stripB, CRGB::Red, FADE_DURATION, FadeCommand::Direction::OUT);
-    fadeInBlue.init(stripB, CRGB::Blue, FADE_DURATION, FadeCommand::Direction::IN);
-    fadeOutBlue.init(stripB, CRGB::Blue, FADE_DURATION, FadeCommand::Direction::OUT);
-    fadeInGreen.init(stripB, CRGB::Green, FADE_DURATION, FadeCommand::Direction::IN);
-    fadeOutGreen.init(stripB, CRGB::Green, FADE_DURATION, FadeCommand::Direction::OUT);
-    fadeSeq.add(&fadeInRed).add(&fadeOutRed).add(&delayCmd).add(&fadeInBlue).add(&fadeOutBlue).add(&delayCmd).add(&fadeInGreen).add(&fadeOutGreen).add(&delayCmd);
-
-    mainCmd.add(&fillSeq).add(&fadeSeq);    
-    loopCmd.init(LoopCommand::INFINITE,&mainCmd);
     loopCmd.begin();
 }
 

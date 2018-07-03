@@ -7,7 +7,6 @@
 #include "DelayCommand.h"
 #include "FadeCommand.h"
 #include "FillCommand.h"
-#include "LedStrip.h"
 #include "LoopCommand.h"
 #include "ParallelCommand.h"
 #include "Timer.h"

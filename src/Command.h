@@ -1,15 +1,10 @@
 #ifndef COMMAND_H
 #define COMMAND_H
+
+#include <Arduino.h>
 #include <stdint.h>
+#include "Debug.h"
 
-
-//Debug mode
-#define DEBUG
-#ifdef DEBUG
- #define DEBUG_PRINT(x)  Serial.println (x)
-#else
- #define DEBUG_PRINT(x)
-#endif
 
 
 

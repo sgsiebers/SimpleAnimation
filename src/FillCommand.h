@@ -2,27 +2,24 @@
 #define FILL_COMMAND_H
 
 #include <Arduino.h>
-#include "LedStrip.h"
 #include "Timer.h"
-#include "Command.h"
+#include "LedCommand.h"
 
-class FillCommand : public Command {
+class FillCommand : public LedCommand {
 
   public:
   
     enum Direction {FORWARD=0,REVERSE=1};
 
-	FillCommand();
-    void init(LedStrip & _strip, CRGB _color, uint8_t _rate, Direction _direction);
+	FillCommand(CRGB* _leds, uint16_t _length, CRGB _color, uint8_t _rate, Direction _direction);
     void begin();
     void update();
 
   private:
-    LedStrip strip;
+    Timer timer;
     CRGB fillColor;
     uint8_t rate; // ms per pixel
     Direction direction;
-    Timer timer;
     int16_t fillIndex;
 
 };

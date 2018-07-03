@@ -8,14 +8,14 @@ class Timer{
 
   public:
     Timer();
+    Timer(uint16_t _duration);
         
     void reset();
-    void setDuration(uint32_t _duration);
     uint32_t elapsedTime();
     bool expired();
 
   private:
-    uint32_t duration;
+    uint16_t duration;
     uint32_t startTime;
 
 };

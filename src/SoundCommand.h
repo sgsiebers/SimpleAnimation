@@ -14,13 +14,12 @@
 class SoundCommand : public Command {
 
   public:
-    SoundCommand(const uint8_t _pin, const uint32_t _duration);
+    SoundCommand(const uint8_t _pin, const uint16_t _duration);
 	void begin();
     void update();
 
   private:
     const uint8_t pin;
-    const uint32_t duration;
     bool pinActive;
     Timer playTimer;
   

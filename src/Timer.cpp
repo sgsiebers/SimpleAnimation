@@ -5,10 +5,8 @@
 
 Timer::Timer(): duration(0),startTime(0) {}
 
+Timer::Timer(uint16_t _duration) : duration(_duration),startTime(0){};
 
-void Timer::setDuration(uint32_t _duration){
-	duration=_duration;
-}
 
 void Timer::reset(){
   startTime = millis();

@@ -2,7 +2,6 @@
 #define LOOP_COMMAND_H
 
 #include <Arduino.h>
-#include "LedStrip.h"
 #include "Command.h"
 
 class LoopCommand : public Command {
@@ -11,16 +10,14 @@ class LoopCommand : public Command {
   
     static const uint16_t INFINITE = 0;
   
-	LoopCommand();
-    void init(const uint16_t _iters, Command* _command);
+	LoopCommand(const uint16_t _numIterations, Command* _command);
     void begin();
     void update();
 
   private:
-    uint16_t loopIters;
-    bool isInfinite;
+    uint16_t numIterations;
+    uint16_t currentCount;
     Command* command;
-    uint16_t loopCount;
     
 };
 

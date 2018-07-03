@@ -3,15 +3,12 @@
 
 
 
-FadeCommand::FadeCommand() : timer(Timer()){}
-
-
-void FadeCommand::init(LedStrip & _strip, CRGB _color, uint32_t _duration, Direction _direction){
-    strip = _strip;
-    color = _color;
-    duration = _duration;
-    direction = _direction;   
-}
+FadeCommand::FadeCommand(CRGB* _leds, uint16_t _length, CRGB _color, uint16_t _duration, Direction _direction) :
+	LedCommand(_leds,_length),
+	color(_color),
+	duration(_duration),
+	direction(_direction),
+	timer(Timer()) {}
 
 
 
@@ -38,7 +35,7 @@ void FadeCommand::update(){
         DEBUG_PRINT("Fade Done!");
         done = true;
     }
-    for(uint16_t i=0; i<strip.length;i++){
-        strip.leds[i]= scaledColor;
+    for(uint16_t i=0; i<length;i++){
+        leds[i]= scaledColor;
     }
 }

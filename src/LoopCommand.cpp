@@ -1,18 +1,15 @@
 #include "LoopCommand.h"
 
 
-LoopCommand::LoopCommand() {}
-
-void LoopCommand::init(const uint16_t _iters, Command* _command){
-    loopIters = _iters;
-    command = _command;
-}
+LoopCommand::LoopCommand(const uint16_t _numIterations, Command* _command) :
+	numIterations(_numIterations),
+	currentCount(0),
+	command(_command){}
 
 
 void LoopCommand::begin(){
     done = false;
-    loopCount = 0;
-    isInfinite = (loopIters == INFINITE);
+    currentCount = 0;
     command->begin();
 }
 
@@ -20,9 +17,9 @@ void LoopCommand::begin(){
 void LoopCommand::update(){
     command->update();
     if(command->isDone()){
-        if(isInfinite){
+        if(numIterations == INFINITE){
             command->begin();
-        }else if(++loopCount >= loopIters){
+        }else if(++currentCount >= numIterations){
             done = true;
         }else{
             command->begin();

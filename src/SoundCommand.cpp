@@ -2,9 +2,7 @@
 
 
 
-SoundCommand::SoundCommand(const uint8_t _pin, const uint32_t _duration) : pin(_pin), duration(_duration+SOUND_PIN_HOLD_TIME), pinActive(false), playTimer(Timer())  {
-  playTimer.setDuration(duration);
-}
+SoundCommand::SoundCommand(const uint8_t _pin, const uint16_t _duration) : pin(_pin), pinActive(false), playTimer(Timer(_duration+SOUND_PIN_HOLD_TIME))  {}
 
 
 void SoundCommand::begin(){
