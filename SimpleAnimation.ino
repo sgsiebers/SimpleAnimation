@@ -2,8 +2,10 @@
 #include "FastLED.h"
 #include "SimpleAnimation.h"
 
-#define LED_PIN_A 4
-#define LED_PIN_B 5
+#define LED_PIN_A 5
+#define LED_PIN_B 6
+#define LED_PIN_C 7
+
 
 #define NUM_LEDS 50
 #define RATE 10
@@ -12,7 +14,7 @@
 
 CRGB ledsA[NUM_LEDS];
 CRGB ledsB[NUM_LEDS];
-
+CRGB ledsC[NUM_LEDS];
 
 FillCommand fillInRed = FillCommand(ledsA, NUM_LEDS, CRGB::Red, RATE, FillCommand::Direction::FORWARD);
 FillCommand fillInBlue = FillCommand(ledsA, NUM_LEDS, CRGB::Blue, RATE, FillCommand::Direction::FORWARD);
@@ -33,8 +35,10 @@ CommandSequence fillSeq = CommandSequence(fillSeqCmds,12);
 Command* fadeSeqCmds[12] = {&fadeInRed,&fadeDelay,&fadeOutRed,&fadeDelay,&fadeInBlue,&fadeDelay,&fadeOutBlue,&fadeDelay,&fadeInGreen,&fadeDelay,&fadeOutGreen,&fadeDelay};
 CommandSequence fadeSeq = CommandSequence(fadeSeqCmds,12);
 
-Command* parallelCmds[2] = {&fillSeq,&fadeSeq};
-ParallelCommand mainCmd = ParallelCommand(parallelCmds,2);
+FlashCommand flashCmd = FlashCommand(ledsC, NUM_LEDS, CRGB::MidnightBlue, 5000, 10);
+
+Command* parallelCmds[3] = {&fillSeq,&fadeSeq, &flashCmd};
+ParallelCommand mainCmd = ParallelCommand(parallelCmds,3);
 
 LoopCommand loopCmd = LoopCommand(LoopCommand::INFINITE,&mainCmd);
 bool done;
@@ -51,6 +55,7 @@ void setup() {
     done = false;
     FastLED.addLeds<NEOPIXEL, LED_PIN_A>(ledsA, NUM_LEDS);
     FastLED.addLeds<NEOPIXEL, LED_PIN_B>(ledsB, NUM_LEDS);
+    FastLED.addLeds<NEOPIXEL, LED_PIN_C>(ledsC, NUM_LEDS);
 
     loopCmd.begin();
 }

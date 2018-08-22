@@ -11,6 +11,6 @@
 #include "ParallelCommand.h"
 #include "Timer.h"
 #include "SoundCommand.h"
-
+#include "FlashCommand.h"
 
 #endif
