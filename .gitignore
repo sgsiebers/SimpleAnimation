@@ -1,2 +1,6 @@
 /Release/
 /sloeber.ino.cpp
+.cproject
+.development
+.project
+.settings/*

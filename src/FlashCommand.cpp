@@ -2,7 +2,7 @@
 
 
 
-FlashCommand:: FlashCommand(CRGB* _leds, uint16_t _length, CRGB _color, uint16_t _duration, uint8_t _numFlashes ):
+FlashCommand::FlashCommand(CRGB* _leds, uint16_t _length, CRGB _color, uint16_t _duration, uint8_t _numFlashes ):
 	LedCommand(_leds,_length),
 	color(_color),
 	duration(_duration),

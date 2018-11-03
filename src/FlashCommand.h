@@ -18,7 +18,7 @@ class FlashCommand : public LedCommand {
 
   private:
     CRGB color;
-    uint16_t duration; //How long the fade effect should take (in ms)
+    uint16_t duration; //How long the flash effect should take (in ms)
     uint8_t numFlashes;
     Timer timer;
 };

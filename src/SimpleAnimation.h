@@ -12,5 +12,6 @@
 #include "Timer.h"
 #include "SoundCommand.h"
 #include "FlashCommand.h"
+#include "PinCommand.h"
 
 #endif
