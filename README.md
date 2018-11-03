@@ -1,5 +1,5 @@
 # SimpleAnimation
-Arduino library for animating basic sequences of timed commands.
+Arduino library for animating basic sequences of timed commands. See my [Contribution Guidelines](CONTRIBUTING.md) for an explanation of where this came from and how it's maintained.
 
 ## Command Descriptions 
 
